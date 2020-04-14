@@ -1,7 +1,7 @@
 ## It is assumed that UCI HCR Dataset files containing features.txt, activity_labels.txt, train and test folders containing
 ## subject_test.txt, y_test.txt, X_test.txt, subject_train.txt, y_train.txt, X_train.txt files
 ## This function gets the data from different sources and creates signle Dataframe for analysis
-getMyData < function(){
+getMyData <- function(){
         SubjecttestDF <- read.table("./test/subject_test.txt")  ## read data from test data sets and combine them
         YtestDF <- read.table("./test/y_test.txt")
         testDF <- read.table("./test/X_test.txt", sep = "", stringsAsFactors = FALSE)
@@ -54,7 +54,7 @@ getMyData < function(){
 
 ## group the data per the requirement of the course project
 groupMyData <- function(){
-        read.csv("RequiredDataFrame.csv", reqJointDF)
+        reqJointDF <- read.csv("RequiredDataFrame.csv", stringsAsFactors = FALSE)
         grpdByIdActDF <- group_by(reqJointDF, subjectid, activity)
         grpdByIdActDFmean <- summarize_all(grpdByIdActDF, list(mean=mean))
         write.csv(grpdByIdActDFmean, file = "groupedMeanData.csv", row.names=FALSE)
