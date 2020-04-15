@@ -8,7 +8,7 @@ getMyData <- function(){
         testDFF <- cbind(SubjecttestDF,YtestDF)
         testDFF <- cbind(testDFF,testDF)
         
-        SubjecttrainDF <- read.table("./train/subject_train.txt")
+        SubjecttrainDF <- read.table("./train/subject_train.txt") ## read data from train data sets and combine them
         YtrainDF <- read.table("./train/y_train.txt")
         trainDF <- read.table("./train/X_train.txt", sep = "", stringsAsFactors = FALSE)
         trainDFF <- cbind(SubjecttrainDF,YtrainDF)
@@ -19,7 +19,7 @@ getMyData <- function(){
         
         ## get column names
         featuresDF <- read.table("features.txt", stringsAsFactors = FALSE)
-        columnDF <- as.vector(c("subjectid", "activity",featuresDF[,2]))  ## create a vector of ALL column names
+        columnDF <- as.vector(c("subjectID", "activity",featuresDF[,2]))  ## create a vector of ALL column names
         names(jointDF) <- columnDF   ## add apprppriate column names to combinded data set
         
         ## add descriptive names to activities column
@@ -34,7 +34,7 @@ getMyData <- function(){
         jointDF[,2] <- activityVector   ## update the dataframe with descriptive values 
         
         ## Identify required columns to be preserved for analysis
-        reqColumnVectorMean <- grep("mean()", columnDF)  ##  find the index of all column names containing "mean" 
+        reqColumnVectorMean <- grep("\\mean()\\b", columnDF)  ##  find the index of all column names containing "mean()" 
         reqColumnVectorStd <- grep("std()", columnDF)    ##  find the index of all column names containing "std" 
         reqColumnVector <- c(1,2,reqColumnVectorMean,reqColumnVectorStd) ## recreate complete needed index 
         sortedColVector <- sort(reqColumnVector)
@@ -42,7 +42,7 @@ getMyData <- function(){
         
         ## Clean column names per tidy dataset conventions  
         newNames <- names(reqJointDF)
-        newNames <- tolower(newNames)  ## remove upper case characters
+        ## newNames <- tolower(newNames)  ## remove upper case characters
         newNames <- gsub("-", "", newNames)   ## remove dashes
         newNames <- sub( "\\(", "", newNames) ## remove paranthesis
         newNames <- sub( "\\)", "", newNames)
@@ -52,11 +52,14 @@ getMyData <- function(){
 }
 
 
-## group the data per the requirement of the course project
+## group the data per the requirement of the course project and create tidy data set
 groupMyData <- function(){
         reqJointDF <- read.csv("RequiredDataFrame.csv", stringsAsFactors = FALSE)
         grpdByIdActDF <- group_by(reqJointDF, subjectid, activity)
-        grpdByIdActDFmean <- summarize_all(grpdByIdActDF, list(mean=mean))
+        grpdByIdActDFmean <- summarize_all(grpdByIdActDF, list(Avg = mean))
+        newNames <- names(grpdByIdActDFmean)
+        newNames <- gsub("_", "", newNames)   ## remove dashes
+        names(grpdByIdActDFmean)<- newNames
         write.csv(grpdByIdActDFmean, file = "groupedMeanData.csv", row.names=FALSE)
 }
 
