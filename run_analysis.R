@@ -48,19 +48,25 @@ getMyData <- function(){
         newNames <- sub( "\\)", "", newNames)
         names(reqJointDF) <- newNames
         
+        reqJointDF <- as.data.frame(reqJointDF) ## remove groupng information to save to a csv file
+        
         write.csv(reqJointDF, file = "RequiredDataFrame.csv", row.names=FALSE )  ## save the required data set in a csv file
+        
+        reqJointDF[1:8, 1:6]## output partial table for varification
 }
 
 
 ## group the data per the requirement of the course project and create tidy data set
 groupMyData <- function(){
         reqJointDF <- read.csv("RequiredDataFrame.csv", stringsAsFactors = FALSE)
-        grpdByIdActDF <- group_by(reqJointDF, subjectid, activity)
-        grpdByIdActDFmean <- summarize_all(grpdByIdActDF, list(Avg = mean))
+        grpdByIdActDF <- group_by(reqJointDF, subjectID, activity)
+        grpdByIdActDFmean <- as.data.frame( summarize_all(grpdByIdActDF, list(Avg = mean)))
         newNames <- names(grpdByIdActDFmean)
         newNames <- gsub("_", "", newNames)   ## remove dashes
         names(grpdByIdActDFmean)<- newNames
         write.csv(grpdByIdActDFmean, file = "groupedMeanData.csv", row.names=FALSE)
+        
+        grpdByIdActDFmean[1:8,1:6]   ## output partial table for varification
 }
 
 
