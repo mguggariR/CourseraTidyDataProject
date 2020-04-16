@@ -1,7 +1,9 @@
-## It is assumed that UCI HCR Dataset files containing features.txt, activity_labels.txt, train and test folders containing
-## subject_test.txt, y_test.txt, X_test.txt, subject_train.txt, y_train.txt, X_train.txt files
-## This function gets the data from different sources and creates signle Dataframe for analysis
-getMyData <- function(){
+## It is assumed that UCI HCR Dataset files contain features.txt, activity_labels.txt files.
+## And train and test folders contain subject_test.txt, y_test.txt, X_test.txt, 
+## subject_train.txt, y_train.txt, and X_train.txt files respectively
+## It is also assumed that project directory where thes files are located is used as working directory for R.
+## Following code chunk gets the data from different sources and creates single Dataframe for analysis
+## @knitr GatherData         
         SubjecttestDF <- read.table("./test/subject_test.txt")  ## read data from test data sets and combine them
         YtestDF <- read.table("./test/y_test.txt")
         testDF <- read.table("./test/X_test.txt", sep = "", stringsAsFactors = FALSE)
@@ -17,13 +19,13 @@ getMyData <- function(){
         ## combine these two data sets
         jointDF <- rbind(testDFF, trainDFF)
         
-        ## get column names
-        featuresDF <- read.table("features.txt", stringsAsFactors = FALSE)
+        
+        featuresDF <- read.table("features.txt", stringsAsFactors = FALSE) ## get column names
         columnDF <- as.vector(c("subjectID", "activity",featuresDF[,2]))  ## create a vector of ALL column names
         names(jointDF) <- columnDF   ## add apprppriate column names to combinded data set
         
         ## add descriptive names to activities column
-        activityVector <- as.vector(jointDF[,2])
+        activityVector <- as.vector(jointDF[,2]) 
         activityVector <- as.character(activityVector)
         activityVector <- sub("1", "WALKING", activityVector)
         activityVector <- sub("2", "WALKING_UPSTAIRS", activityVector)
@@ -42,7 +44,6 @@ getMyData <- function(){
         
         ## Clean column names per tidy dataset conventions  
         newNames <- names(reqJointDF)
-        ## newNames <- tolower(newNames)  ## remove upper case characters
         newNames <- gsub("-", "", newNames)   ## remove dashes
         newNames <- sub( "\\(", "", newNames) ## remove paranthesis
         newNames <- sub( "\\)", "", newNames)
@@ -53,11 +54,10 @@ getMyData <- function(){
         write.csv(reqJointDF, file = "RequiredDataFrame.csv", row.names=FALSE )  ## save the required data set in a csv file
         
         reqJointDF[1:8, 1:6]## output partial table for varification
-}
+##
 
-
-## group the data per the requirement of the course project and create tidy data set
-groupMyData <- function(){
+## Following chunk of code groups the data per the requirement of the course project and create tidy data set
+## @knitr GroupData
         reqJointDF <- read.csv("RequiredDataFrame.csv", stringsAsFactors = FALSE)
         grpdByIdActDF <- group_by(reqJointDF, subjectID, activity)
         grpdByIdActDFmean <- as.data.frame( summarize_all(grpdByIdActDF, list(Avg = mean)))
@@ -67,6 +67,4 @@ groupMyData <- function(){
         write.csv(grpdByIdActDFmean, file = "groupedMeanData.csv", row.names=FALSE)
         
         grpdByIdActDFmean[1:8,1:6]   ## output partial table for varification
-}
-
-
+##
