@@ -64,7 +64,7 @@
         newNames <- names(grpdByIdActDFmean)
         newNames <- gsub("_", "", newNames)   ## remove dashes
         names(grpdByIdActDFmean)<- newNames
-        write.csv(grpdByIdActDFmean, file = "groupedMeanData.csv", row.names=FALSE)
+        write.table(grpdByIdActDFmean, file = "groupedMeanData.txt", row.names=FALSE)
         
         grpdByIdActDFmean[1:8,1:6]   ## output partial table for varification
 ##
