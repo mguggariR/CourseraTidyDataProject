@@ -67,7 +67,7 @@ This dataframe is then grouped by 30 Subject IDs and 6 Activity types.
 
 Using this grouped dataframe, a new dataframe with 180 rows is created with summarized average value for each measurement in the data.  
 
-This new data frame is saved as “groupedMeanData.csv” in R working directory.  
+This new data frame is saved as “groupedMeanData.txt” in R working directory.  
 
 The last line of code in this chunk also outputs partial dataframe for verification as shown below.  
 
