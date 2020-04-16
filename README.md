@@ -126,10 +126,10 @@ Following code chunk will clean the column names by removing dashes introduces b
         names(grpdByIdActDFmean)<- newNames
 ```
 
-Following code chunk will create and store data in a csv file.  
+Following code chunk will create and store data in a txt file as requested.  
 
 ```r
-write.csv(grpdByIdActDFmean, file = "groupedMeanData.csv", row.names=FALSE)
+write.table(grpdByIdActDFmean, file = "groupedMeanData.txt", row.names=FALSE)
 ```
 
 A subset of the combined dataset can be returned for varification using this code chunk.  
