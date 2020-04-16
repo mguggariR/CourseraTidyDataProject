@@ -13,61 +13,63 @@ editor_options:
 
 
 ## **Introduction:**
-The original dataset contains many tables is different files to store raw data from the experiments carried out with a group of 30 volunteers. The objective is to obtain the raw data, clean it and structure it in tidy data format for analysis.  
+The original dataset contains many tables in different files to store raw data from the experiments carried out with a group of 30 volunteers. The objective is to obtain the raw data, clean it and structure it in a tidy data format for analysis.  
 
 The data was randomly divided in two datasets represented as training data set and test data sets.  In each dataset the raw data was spread in three data files: experimental results, subject IDs and type of activity. 
 
-In this project these distributed datasets are obtained, cleaned, combined and a tidy data set is created.  In addition,  a new tidy data set is created with mean values of grouped dataset from original data set. 
+In this project these distributed datasets are obtained, cleaned, combined and a tidy data set is created.  
 
-Following sections explain the operation of the program and data dictionary for the tidy data set.  Further details of the actual program is provided the readme.txt file in the github depository. 
+In addition,  a new tidy data set is created with mean values of grouped dataset from original data set for further higher level analyis of the dataset. 
+
+Following sections explain the operation of the program and provide data dictionary for the final tidy data set.  
+
+In addition, this rmd file is designed to run the scripts and produce a subset of the data in table format for the two parts of the project. Further details of the actual program are provided the README.md file in the github depository. 
 
 ## **Program:**
 
 It is assumed that the raw data is already down loaded and available at working directory of R in a structure similar to original zip file.  
 
-An R based program was used to write two functions “getMyData” and “groupMyData”, to achieve the results. These programs should be called from the console in succession to create the required tiny dataset.  
+An R based program is written in two chunks “getMyData” and “groupMyData”, to achieve the results. These program chucks can be called from the console in succession to create the required tiny dataset.  
 
-#### *	"getMyData"
+#####  "getMyData"
 
-This function will load data from various data files in to R environment.  Then the data is combined to form a unified dataframe.   
+This R code chunk will load data from various data files in to R environment.  Then the data is combined to form a unified dataframe.   
 
 As the values of the activity column in the unified dataset are obscurely coded from 1-6, a descriptive activity names are substituted in the column.
 
 A new dataframe is created with only required columns to facilitate analysis.
-Column names are modified to meet tidy data practices by removing special characters (e.g. parenthesis and dashes) and upper-case letters.
+Column names are modified to meet tidy data practices by removing special characters (e.g. parenthesis and dashes).
 
 This clean data is then saved as “RequiredDataFrame.csv” in R working directory.
 
-The function also outputs partial dataframe for verification as shown below.
+The last line of code in this chuck also outputs partial dataframe for verification as shown below.
 
 
- 
 
 
 ```
-##   subjectID activity tBodyAccmeanX tBodyAccmeanY tBodyAccmeanZ
-## 1         2 STANDING     0.2571778   -0.02328523   -0.01465376
-## 2         2 STANDING     0.2860267   -0.01316336   -0.11908252
-## 3         2 STANDING     0.2754848   -0.02605042   -0.11815167
-## 4         2 STANDING     0.2702982   -0.03261387   -0.11752018
-## 5         2 STANDING     0.2748330   -0.02784779   -0.12952716
-## 6         2 STANDING     0.2792199   -0.01862040   -0.11390197
-## 7         2 STANDING     0.2797459   -0.01827103   -0.10399988
-## 8         2 STANDING     0.2746005   -0.02503513   -0.11683085
+##   subjectID activity tBodyAccmeanX tBodyAccmeanY tBodyAccmeanZ tBodyAccstdX
+## 1         2 STANDING     0.2571778   -0.02328523   -0.01465376   -0.9384040
+## 2         2 STANDING     0.2860267   -0.01316336   -0.11908252   -0.9754147
+## 3         2 STANDING     0.2754848   -0.02605042   -0.11815167   -0.9938190
+## 4         2 STANDING     0.2702982   -0.03261387   -0.11752018   -0.9947428
+## 5         2 STANDING     0.2748330   -0.02784779   -0.12952716   -0.9938525
+## 6         2 STANDING     0.2792199   -0.01862040   -0.11390197   -0.9944552
+## 7         2 STANDING     0.2797459   -0.01827103   -0.10399988   -0.9958192
+## 8         2 STANDING     0.2746005   -0.02503513   -0.11683085   -0.9955944
 ```
 
+#####  "groupMyData"
 
-#### b.	"groupMyData"
+This chunk of R code loads data from already created “RequiredDataFrame.csv” file in R working directory and converts that into a dataframe.  
 
-This function with load data from already created “RequiredDataFrame.csv” file in R working directory and converts that into a dataframe.  
-
-This dataframe is then grouped by 30 Subject ID and 6 Activity types. 
+This dataframe is then grouped by 30 Subject IDs and 6 Activity types.   
 
 Using this grouped dataframe, a new dataframe with 180 rows is created with summarized average value for each measurement in the data.  
 
-This new data frame is saved as “groupedMeanData.csv” in R working directory.
+This new data frame is saved as “groupedMeanData.csv” in R working directory.  
 
-The function also outputs partial dataframe for verification as shown below.
+The last line of code in this chunk also outputs partial dataframe for verification as shown below.  
 
 
 
@@ -94,142 +96,128 @@ The function also outputs partial dataframe for verification as shown below.
 
 ## DATA DICTIONARY: ##
 
-This section describes all the variables present in the output produced by this data analysis.
+This section describes all the variables present in the output produced by this data analysis.  
 
 
-subjectID : (INT) Random identification number 1-30 for 30 volunteers  
+*  subjectID : (INT) Random identification number 1-30 for 30 volunteers  
 
-activity : (CHAR) One of the six possible activities monitored  
-* WALKING  
-* WALKING_UPSTAIRS  
-* WALKING_DOWNSTAIRS  
-* SITTING  
-* STANDING  
-* LAYING  
+*  activity : (CHAR) One of the six possible activities monitored   
+    1.  WALKING    
+    2.  WALKING_UPSTAIRS  
+    3.  WALKING_DOWNSTAIRS  
+    4.  SITTING  
+    5.  STANDING  
+    6. LAYING  
 
 All the following variables are of class NUM.  Variables with “t” suffix represent time domain signals. Variables with “f” suffix represent variables derived in frequency domain using Fast Fourier Transform.    
 
-Average of the mean values of time domain accelerometer in 3 axis measurements for the body are represented by these variables.  
+Average of the mean values of time domain accelerometer in 3 axis measurements for the body are represented by these variables.    
 
-tBodyAccmeanXAvg  
-tBodyAccmeanYAvg  
-tBodyAccmeanZAvg  
-fBodyAccmeanXAvg  
-fBodyAccmeanYAvg  
-fBodyAccmeanZAvg  
+*    tBodyAccmeanXAvg    
+*    tBodyAccmeanYAvg  
+*    tBodyAccmeanZAvg  
+*    fBodyAccmeanXAvg  
+*    fBodyAccmeanYAvg  
+*    fBodyAccmeanZAvg  
 
 Average of the standard deviation of time domain accelerometer in 3 axis measurements for the body are represented by these variables.  
-tBodyAccstdXAvg  
-tBodyAccstdYAvg  
-tBodyAccstdZAvg  
-fBodyAccstdXAvg  
-fBodyAccstdYAvg  
-fBodyAccstdZAvg  
 
-Average of the mean values of time domain accelerometer in 3 axis measurements for gravity are represented by these variables.
-tGravityAccmeanXAvg
-tGravityAccmeanYAvg
-tGravityAccmeanZAvg
+*    tBodyAccstdXAvg  
+*    tBodyAccstdYAvg  
+*    tBodyAccstdZAvg  
+*    fBodyAccstdXAvg  
+*    fBodyAccstdYAvg  
+*    fBodyAccstdZAvg  
 
-Average of the standard deviation of time domain accelerometer in 3 axis measurements for the body are represented by these variables.
-tGravityAccstdXAvg
-tGravityAccstdYAvg
-tGravityAccstdZAvg
+Average of the mean values of time domain accelerometer in 3 axis measurements for gravity are represented by these variables.  
 
-Average of mean value of Jerk signals derived from linear acceleration in 3 axis for body are represented by these variables. 
-tBodyAccJerkmeanXAvg
-tBodyAccJerkmeanYAvg
-tBodyAccJerkmeanZAvg
-fBodyAccJerkmeanXAvg
-fBodyAccJerkmeanYAvg
-fBodyAccJerkmeanZAvg
+*    tGravityAccmeanXAvg  
+*    tGravityAccmeanYAvg  
+*    tGravityAccmeanZAvg
 
-Average of standard deviation value of Jerk signals derived from linear acceleration in 3 axis for body are represented by these variables. 
-tBodyAccJerkstdXAvg
-tBodyAccJerkstdYAvg
-tBodyAccJerkstdZAvg
-fBodyAccJerkstdXAvg
-fBodyAccJerkstdYAvg
-fBodyAccJerkstdZAvg
+Average of the standard deviation of time domain accelerometer in 3 axis measurements for the body are represented by these variables.  
 
-Average of mean value of gyroscope signals  in 3 axes for body are represented by these variables. 
-tBodyGyromeanXAvg
-tBodyGyromeanYAvg
-tBodyGyromeanZAvg
-fBodyGyromeanXAvg
-fBodyGyromeanYAvg
-fBodyGyromeanZAvg
+*    tGravityAccstdXAvg
+*    tGravityAccstdYAvg
+*    tGravityAccstdZAvg
 
-Average of standard deviation value of gyroscope signals in 3 axes for body are represented by these variables. 
-tBodyGyrostdXAvg
-tBodyGyrostdYAvg
-tBodyGyrostdZAvg
-fBodyGyrostdXAvg
-fBodyGyrostdYAvg
-fBodyGyrostdZAvg
+Average of mean value of Jerk signals derived from linear acceleration in 3 axis for body are represented by these variables.  
 
-Average of mean value of Jerk signals derived from angular velocity  in 3 axes for body are represented by these variables. 
-tBodyGyroJerkmeanXAvg
-tBodyGyroJerkmeanYAvg
-tBodyGyroJerkmeanZAvg
+*    tBodyAccJerkmeanXAvg
+*    tBodyAccJerkmeanYAvg
+*    tBodyAccJerkmeanZAvg
+*    fBodyAccJerkmeanXAvg
+*    fBodyAccJerkmeanYAvg
+*    fBodyAccJerkmeanZAvg
 
-Average of standard deviation value of Jerk signals derived from angular velocity  in 3 axes for body are represented by these variables. 
-tBodyGyroJerkstdXAvg
-tBodyGyroJerkstdYAvg
-tBodyGyroJerkstdZAvg
+Average of standard deviation value of Jerk signals derived from linear acceleration in 3 axis for body are represented by these variables.  
 
-Average of the mean and standard deviation of the magnitude of body acceleration using Euclidean norm are represented by these variables.
-tBodyAccMagmeanAvg
-tBodyAccMagstdAvg
-fBodyAccMagmeanAvg
-fBodyAccMagstdAvg
+*    tBodyAccJerkstdXAvg
+*    tBodyAccJerkstdYAvg
+*    tBodyAccJerkstdZAvg
+*    fBodyAccJerkstdXAvg
+*    fBodyAccJerkstdYAvg
+*    fBodyAccJerkstdZAvg
 
-Average of the mean and standard deviation of the acceleration by gravity using Euclidean norm are represented by these variables.
-tGravityAccMagmeanAvg
-tGravityAccMagstdAvg
+Average of mean value of gyroscope signals  in 3 axes for body are represented by these variables.  
 
-Average of the mean and standard deviation of the magnitude of Jerk of body acceleration using Euclidean norm are represented by these variables.
-tBodyAccJerkMagmeanAvg
-tBodyAccJerkMagstdAvg
-fBodyBodyAccJerkMagmeanAvg
-fBodyBodyAccJerkMagstdAvg
+*    tBodyGyromeanXAvg  
+*    tBodyGyromeanYAvg  
+*    tBodyGyromeanZAvg  
+*    fBodyGyromeanXAvg  
+*    fBodyGyromeanYAvg  
+*    fBodyGyromeanZAvg  
 
-Average of the mean and standard deviation of the magnitude of gyro using Euclidean norm are represented by these variables.
-tBodyGyroMagmeanAvg
-tBodyGyroMagstdAvg
-fBodyBodyGyroMagmeanAvg
-fBodyBodyGyroMagstdAvg
+Average of standard deviation value of gyroscope signals in 3 axes for body are represented by these variables.  
 
-Average of the mean and standard deviation of the magnitude of Jerk due to gravity-based  acceleration using Euclidean norm are represented by these variables. 
-tBodyGyroJerkMagmeanAvg
-tBodyGyroJerkMagstdAvg
-fBodyBodyGyroJerkMagmeanAvg
-fBodyBodyGyroJerkMagstdAvg
+*    tBodyGyrostdXAvg
+*    tBodyGyrostdYAvg
+*    tBodyGyrostdZAvg
+*    fBodyGyrostdXAvg
+*    fBodyGyrostdYAvg
+*    fBodyGyrostdZAvg
 
+Average of mean value of Jerk signals derived from angular velocity  in 3 axes for body are represented by these variables.  
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+*    tBodyGyroJerkmeanXAvg  
+*    tBodyGyroJerkmeanYAvg  
+*    tBodyGyroJerkmeanZAvg  
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Average of standard deviation value of Jerk signals derived from angular velocity  in 3 axes for body are represented by these variables.   
 
+*    tBodyGyroJerkstdXAvg  
+*    tBodyGyroJerkstdYAvg  
+*    tBodyGyroJerkstdZAvg  
 
-```r
-summary(cars)
-```
+Average of the mean and standard deviation of the magnitude of body acceleration using Euclidean norm are represented by these variables.  
 
-```
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-```
+*    tBodyAccMagmeanAvg  
+*    tBodyAccMagstdAvg  
+*    fBodyAccMagmeanAvg  
+*    fBodyAccMagstdAvg  
 
-## Including Plots
+Average of the mean and standard deviation of the acceleration by gravity using Euclidean norm are represented by these variables.  
 
-You can also embed plots, for example:
+*    tGravityAccMagmeanAvg  
+*    tGravityAccMagstdAvg  
 
-![](CodeBook_files/figure-html/pressure-1.png)<!-- -->
+Average of the mean and standard deviation of the magnitude of Jerk of body acceleration using Euclidean norm are represented by these variables.  
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+*    tBodyAccJerkMagmeanAvg  
+*    tBodyAccJerkMagstdAvg  
+*    fBodyBodyAccJerkMagmeanAvg  
+*    fBodyBodyAccJerkMagstdAvg  
+
+Average of the mean and standard deviation of the magnitude of gyro using Euclidean norm are represented by these variables.   
+
+*    tBodyGyroMagmeanAvg  
+*    tBodyGyroMagstdAvg   
+*    fBodyBodyGyroMagmeanAvg  
+*    fBodyBodyGyroMagstdAvg  
+
+Average of the mean and standard deviation of the magnitude of Jerk due to gravity-based  acceleration using Euclidean norm are represented by these variables.    
+
+*    tBodyGyroJerkMagmeanAvg  
+*    tBodyGyroJerkMagstdAvg  
+*    fBodyBodyGyroJerkMagmeanAvg  
+*    fBodyBodyGyroJerkMagstdAvg  
