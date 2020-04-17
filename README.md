@@ -137,5 +137,6 @@ A subset of the combined dataset can be returned for varification using this cod
 ```r
 grpdByIdActDFmean[1:8,1:6]   ## output partial table for varification
 ```
+Note that the resulted tidy data contains only mean of grouped values in 180 rows (30*6) as per the project requirement.
 
 As indicated earlier codebook.md presents the results of the code outputs. 
